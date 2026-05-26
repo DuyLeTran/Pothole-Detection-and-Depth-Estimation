@@ -16,7 +16,11 @@ runs/
 outputs/
 predictions/
 
+rdd2022/
 data/
 
+pothole600
+Test - Computer Vision Fresher.pdf
+implementation_plan.md
 .DS_Store
 Thumbs.db

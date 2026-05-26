@@ -1,17 +1,41 @@
+import argparse
+from pathlib import Path
+
 from ultralytics import YOLO
 
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Train/fine-tune a YOLOv8 model")
+    parser.add_argument("--weights", type=str, default="yolov8n.pt", help="Initial weights/checkpoint")
+    parser.add_argument("--data", type=str, default="data/data.yaml", help="Dataset YAML")
+    parser.add_argument("--epochs", type=int, default=400)
+    parser.add_argument("--patience", type=int, default=50)
+    parser.add_argument("--imgsz", type=int, default=640)
+    parser.add_argument("--batch", type=int, default=16)
+    parser.add_argument("--name", type=str, default="yolo_pothole_yolov8n")
+    return parser.parse_args()
+
+
+def resolve_repo_path(path_str: str) -> str:
+    path = Path(path_str)
+    if path.is_absolute():
+        return str(path)
+    repo_root = Path(__file__).resolve().parents[2]
+    return str((repo_root / path).resolve())
+
 def main() -> None:
+    args = parse_args()
     # Use YOLOv8-nano (yolov8n.pt) to target >= 20 FPS on Edge CPU
-    model = YOLO("yolov8n.pt")
+    model = YOLO(resolve_repo_path(args.weights))
     
     # Configuration for a large, diverse dataset (many images, various conditions: night, rain, harsh sunlight)
     model.train(
-        data="data/data.yaml",
-        epochs=400,        
-        patience=50,       
-        imgsz=640, 
-        batch=16,          # 16 is a safe GPU batch size, large enough for stable gradients on big datasets
-        name="yolo_pothole_yolov8n",
+        data=resolve_repo_path(args.data),
+        epochs=args.epochs,
+        patience=args.patience,
+        imgsz=args.imgsz,
+        batch=args.batch,          # 16 is a safe GPU batch size, large enough for stable gradients on big datasets
+        name=args.name,
         
         # --- TECHNIQUES FOR LARGE DATASETS ---
         # Do not freeze layers so the model can fully leverage the large dataset
