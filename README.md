@@ -132,7 +132,7 @@ The system has been rigorously analyzed against edge-case scenarios under physic
 ### 3.3 Robustness Demonstrations (Night / Rain / Sunny)
 
 <p align="center">
-  <img src="    assets/pipeline_combined.gif" alt="BBox Projection" width="1200px" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+  <img src="assets/pipeline_combined.gif" alt="BBox Projection" width="1200px" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
 </p>
 
 ---
