@@ -12,15 +12,9 @@ env/
 .ipynb_checkpoints/
 
 tmp/
-runs/
 outputs/
 predictions/
-
-rdd2022/
 data/
-
-pothole600
-Test - Computer Vision Fresher.pdf
-implementation_plan.md
+src/depth
 .DS_Store
 Thumbs.db
