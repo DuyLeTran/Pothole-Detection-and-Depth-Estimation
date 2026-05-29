@@ -13,6 +13,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--imgsz", type=int, default=640)
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--name", type=str, default="yolo_pothole_yolov8n")
+    parser.add_argument("--freeze", type=int, default=0, help="Number of layers to freeze")
+    parser.add_argument("--lr0", type=float, default=0.01, help="Initial learning rate")
+    parser.add_argument("--lrf", type=float, default=0.01, help="Final learning rate")
+    parser.add_argument("--weight_decay", type=float, default=0.0005, help="Weight decay")
+    parser.add_argument("--cos_lr", type=bool, default=True, help="Cosine learning rate")
     return parser.parse_args()
 
 
@@ -36,16 +41,16 @@ def main() -> None:
         imgsz=args.imgsz,
         batch=args.batch,          # 16 is a safe GPU batch size, large enough for stable gradients on big datasets
         name=args.name,
-        
+        freeze=args.freeze,
         # --- TECHNIQUES FOR LARGE DATASETS ---
         # Do not freeze layers so the model can fully leverage the large dataset
         
         # Optimizer: with sufficient data, the default optimizer (often SGD) can generalize better than AdamW
         optimizer="auto",    
-        lr0=0.01,            
-        lrf=0.01,            
-        weight_decay=0.0005, # keep a small weight decay; large dataset helps prevent overfitting
-        cos_lr=True,         
+        lr0=args.lr0,            
+        lrf=args.lrf,            
+        weight_decay=args.weight_decay, # keep a small weight decay; large dataset helps prevent overfitting
+        cos_lr=args.cos_lr,         
         
         # --- STRONGER DATA AUGMENTATION ---
         # 1. Simulate lighting conditions (night, rain, harsh sunlight)
@@ -63,6 +68,8 @@ def main() -> None:
         mosaic=1.0,          # mosaic augmentation to increase context
         mixup=0.15,          # 15% mixup for harder overlapping/noisy examples
         fliplr=0.5,          
+
+        warmup_epochs=3.0,
     )
 
 if __name__ == "__main__":
