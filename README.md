@@ -127,7 +127,7 @@ The system has been rigorously analyzed against edge-case scenarios under physic
     *   *Mitigation Strategy:* Implement a **Temporal Tracking Filter (e.g., ByteTrack or SORT)** to retain bounding boxes across temporarily occluded frames, alongside integrating realistic rain-simulated overlays and rain-induced lens distortion into the YOLOv8 data augmentation pipeline.
 *   **Failure Case 3: Geometric Measurements Degradation due to Vehicle Suspension Pitch Vibrations:**
     *   *Root Cause:* During acceleration, braking, or driving over uneven terrain, vertical vehicle oscillations shift the real-time pitch angle $\theta_{pitch}$ by $\pm 2^\circ$ to $\pm 5^\circ$, violating the static geometry assumptions of the IPM model and introducing severe metric estimation errors.
-    *   *Proposed Dynamic Calibration (Bonus C4 Initiative):* Implement a real-time vanishing point tracking algorithm to continuously estimate the dynamic horizon line. This dynamically adapts the frame-by-frame pitch angle ($\theta_{pitch\_dynamic}$), coupled with a 1D Kalman filter to smooth structural high-frequency vibration noise.
+    *   *Proposed Dynamic Calibration:* Implement a real-time vanishing point tracking algorithm to continuously estimate the dynamic horizon line. This dynamically adapts the frame-by-frame pitch angle ($\theta_{pitch\_dynamic}$), coupled with a 1D Kalman filter to smooth structural high-frequency vibration noise.
 
 ### 3.3 Robustness Demonstrations (Night / Rain / Sunny)
 
