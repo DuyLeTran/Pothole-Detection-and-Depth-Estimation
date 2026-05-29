@@ -1,7 +1,7 @@
 # 🕳️ Real-Time Pothole Detection, Depth & Area Estimation on Edge CPU
 
 <p align="center">
-  <video src="runs/inference_pipeline/pipeline_demo_origin.mp4" width="1200px" autoplay loop muted playsinline></video>
+  <img src="assets/pipeline_demo_origin.gif" alt="BBox Projection" width="1200px" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
 </p>
 <p align="center">
   <img src="demo.jpg" alt="BBox Projection" width="1200px" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
@@ -108,15 +108,14 @@ The **Depth Anything V2** core network (ViT-Small variant) yields a relative dis
 
 ## 3. 📊 Acceptance Report & Error Analysis
 
-### 3.1 Quantitative System Benchmark (Criteria A1 - A3)
-
+### 3.1 Quantitative System Benchmark
 | # | Evaluation Criterion | Target Threshold | Excellence Threshold | Measured Performance |
 |---|---|---|---|---|
 | A1 | **Pothole Detection mAP@0.5** | $\ge$ 80% | 88–92% | 88.24% |
-| A2 | **Depth & Area Estimation Error** | Error $\le$ 15% | Error $\le$ 8% | `[ ENTER MEASURED ERROR HERE - E.G., 7% ]` |
+| A2 | **Depth & Area Estimation Error** | Error $\le$ 15% | Error $\le$ 8% | `N/A (not benchmarked yet)` |
 | A3 | **End-to-End CPU Inference Speed** | $\ge$ 15 FPS | $\ge$ 20 FPS | $\ge$ 18 FPS |
 
-### 3.2 Failure Analysis & Mitigation Strategies (Criterion A4)
+### 3.2 Failure Analysis & Mitigation Strategies
 
 The system has been rigorously analyzed against edge-case scenarios under physical operating conditions, and mathematical/logical safeguards have been integrated:
 
@@ -130,10 +129,10 @@ The system has been rigorously analyzed against edge-case scenarios under physic
     *   *Root Cause:* During acceleration, braking, or driving over uneven terrain, vertical vehicle oscillations shift the real-time pitch angle $\theta_{pitch}$ by $\pm 2^\circ$ to $\pm 5^\circ$, violating the static geometry assumptions of the IPM model and introducing severe metric estimation errors.
     *   *Proposed Dynamic Calibration (Bonus C4 Initiative):* Implement a real-time vanishing point tracking algorithm to continuously estimate the dynamic horizon line. This dynamically adapts the frame-by-frame pitch angle ($\theta_{pitch\_dynamic}$), coupled with a 1D Kalman filter to smooth structural high-frequency vibration noise.
 
-### 3.3 Robustness Demonstrations (Night / Rain / High Contrast) (Criterion A5)
+### 3.3 Robustness Demonstrations (Night / Rain / Sunny)
 
 <p align="center">
-  <video src="runs/inference_pipeline/pipeline_combined.mp4" width="100%" autoplay loop muted playsinline></video>
+  <img src="    assets/pipeline_combined.gif" alt="BBox Projection" width="1200px" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
 </p>
 
 ---
@@ -146,6 +145,9 @@ The codebase is highly modularized, strictly partitioning integrated inference p
 
 ```text
 Potholes-Detection/
+├── assets/                                     # Demo
+│   ├── pipeline_combined.gif                   
+│   └── pipeline_demo_origin.gif              
 ├── checkpoints/                                
 │   ├── yolov8n_best.onnx                       # Fine-tuned YOLOv8-nano detector exported to highly optimized ONNX format
 │   └── depth_anything_v2_vits_dynamic.onnx     # Depth Anything V2 (ViT-Small) monocular depth estimator with dynamic axes
